@@ -72,6 +72,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="温度"
+            android:textColor="#FF83FA"
             android:textSize="20sp" />
 
         <TextView
@@ -80,6 +81,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="湿度"
+            android:textColor="#FF83FA"
             android:textSize="20sp" />
 
         <TextView
@@ -88,6 +90,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="风向"
+            android:textColor="#FF83FA"
             android:textSize="20sp" />
 
         <TextView
@@ -96,6 +99,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="状态"
+            android:textColor="#FF83FA"
             android:textSize="20sp" />
     </LinearLayout>
 </LinearLayout>

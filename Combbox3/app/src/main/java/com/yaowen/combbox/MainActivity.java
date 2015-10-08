@@ -27,7 +27,7 @@ public class MainActivity extends AppCompatActivity {
         wendu= (TextView) findViewById(R.id.tv_wendu1);
         shidu= (TextView) findViewById(R.id.tv_shidu1);
         fengxiang= (TextView) findViewById(R.id.tv_fengxiang1);
-        TextView zhuangtai= (TextView) findViewById(R.id.tv_zhuangtai1);
+        zhuangtai= (TextView) findViewById(R.id.tv_zhuangtai1);
         final List<Wether>wether=new ArrayList<Wether>();
         wether.add(new Wether("广州","26°C","85%","东风","多云"));
         wether.add(new Wether("湛江","28°C","95%","东北风","暴雨"));
@@ -43,6 +43,10 @@ public class MainActivity extends AppCompatActivity {
                 String str = parent.getItemAtPosition(position).toString();
                 Toast.makeText(MainActivity.this, "你选择的是：" + str, Toast.LENGTH_SHORT).show();
                 Log.d("TAG", "你选择的是：" + str);
+                wendu.setText(wether.get(position).getWendu());
+                shidu.setText(wether.get(position).getShidu());
+                fengxiang.setText(wether.get(position).getFengxiang());
+                zhuangtai.setText(wether.get(position).getZhuangtai());
             }
 
             @Override
