@@ -28,7 +28,6 @@ public class MainActivity extends AppCompatActivity {
         shidu= (TextView) findViewById(R.id.tv_shidu1);
         fengxiang= (TextView) findViewById(R.id.tv_fengxiang1);
         TextView zhuangtai= (TextView) findViewById(R.id.tv_zhuangtai1);
-        //getData();
         final List<Wether>wether=new ArrayList<Wether>();
         wether.add(new Wether("广州","26°C","85%","东风","多云"));
         wether.add(new Wether("湛江","28°C","95%","东北风","暴雨"));
@@ -52,14 +51,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
-
-    /*public void getData() {
-        items = new ArrayList<String>();
-        items.add("多云");
-        items.add("阳光");
-        items.add("小雨");
-        items.add("暴雨");
-    }*/
     class MyAdapter extends BaseAdapter {
         private Context context = null;
         private List<Wether> wether;
