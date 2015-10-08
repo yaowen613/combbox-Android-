@@ -22,30 +22,40 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
     private Combbox combbox;
     private SimpleCombobox combobox2;
-    private TextView wendu,shidu,fengxiang,zhuangtai;
+    private TextView wendu, shidu, fengxiang, zhuangtai;
+    boolean isCombboxFirst = true;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         combbox = (Combbox) findViewById(R.id.combbox);
-        wendu= (TextView) findViewById(R.id.tv_wendu1);
-        shidu= (TextView) findViewById(R.id.tv_shidu1);
-        fengxiang= (TextView) findViewById(R.id.tv_fengxiang1);
-        zhuangtai= (TextView) findViewById(R.id.tv_zhuangtai1);
-        final List<Wether>wether=new ArrayList<Wether>();
+        wendu = (TextView) findViewById(R.id.tv_wendu1);
+        shidu = (TextView) findViewById(R.id.tv_shidu1);
+        fengxiang = (TextView) findViewById(R.id.tv_fengxiang1);
+        zhuangtai = (TextView) findViewById(R.id.tv_zhuangtai1);
+        final List<Wether> wether = new ArrayList<Wether>();
         //wether.add(new Wether("","","","",""));
-        wether.add(new Wether("广州","26°C","85%","东风","多云"));
-        wether.add(new Wether("湛江","28°C","95%","东北风","暴雨"));
-        wether.add(new Wether("深圳","24°C","85%","偏东风","多云"));
-        wether.add(new Wether("北京","23°C","54%","东南风","晴"));
-        MyAdapter adapter=new MyAdapter(this,wether);
+        wether.add(new Wether("广州", "26°C", "85%", "东风", "多云"));
+        wether.add(new Wether("湛江", "28°C", "95%", "东北风", "暴雨"));
+        wether.add(new Wether("深圳", "24°C", "85%", "偏东风", "多云"));
+        wether.add(new Wether("北京", "23°C", "54%", "东南风", "晴"));
+        MyAdapter adapter = new MyAdapter(this, wether);
         //combbox.setSelection(-1,true);
         //combbox.setSelection(0,true);
         combbox.setAdapter(adapter);
-        combbox.setSelection(1);
+//        combbox.setSelection(0);
+
         combbox.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                if (isCombboxFirst) {
+                    //第一次初始化spinner时，不显示默认被选择的第一项即可
+//                    TextView city = (TextView) view.findViewById(R.id.tv);
+//                    city.setText("");
+                    view.setVisibility(View.INVISIBLE);
+                }
+                isCombboxFirst = false;
                 String str = parent.getItemAtPosition(position).toString();
 //                Toast.makeText(MainActivity.this, "你选择的是：" + str, Toast.LENGTH_SHORT).show();
                 Log.d("TAG", "你选择的是：" + str);
@@ -60,11 +70,13 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
+        Wether jsonObject = (Wether) combbox.getSelectedItem();
+        Log.d("TAG", "22" + jsonObject.getCity());
         combobox2 = (SimpleCombobox) findViewById(R.id.simpleCombobox);
-        ArrayList<JSONObject> store=new ArrayList<JSONObject>(3);
-        JSONObject jsonObject1=new JSONObject();
-        JSONObject jsonObject2=new JSONObject();
-        JSONObject jsonObject3=new JSONObject();
+        ArrayList<JSONObject> store = new ArrayList<JSONObject>(3);
+        JSONObject jsonObject1 = new JSONObject();
+        JSONObject jsonObject2 = new JSONObject();
+        JSONObject jsonObject3 = new JSONObject();
         try {
             jsonObject1.putOpt("name", "1");
             jsonObject1.putOpt("code", "a");
@@ -79,7 +91,7 @@ public class MainActivity extends AppCompatActivity {
         store.add(jsonObject2);
         store.add(jsonObject3);
         String[] list = {"1", "2", "3"};
-        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, R.layout.item,R.id.item_tv, list);
+        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, R.layout.item, R.id.item_tv, list);
         combobox2.loadData(store);
         combobox2.setSelection(-1);
         combobox2.setItemClickListeners(new SimpleCombobox.OnSelectedListener() {
@@ -87,7 +99,7 @@ public class MainActivity extends AppCompatActivity {
             public void onCombboxItemSelected(JSONObject data) {
                 try {
                     Toast.makeText(MainActivity.this, data.get("code").toString(), Toast.LENGTH_LONG).show();
-                    Log.d("MainActivity","name:"+data.get("name").toString());
+                    Log.d("MainActivity", "name:" + data.get("name").toString());
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -95,13 +107,14 @@ public class MainActivity extends AppCompatActivity {
         });
 
     }
+
     class MyAdapter extends BaseAdapter {
         private Context context = null;
         private List<Wether> wether;
 
-        public MyAdapter(Context context,List<Wether> wether) {
+        public MyAdapter(Context context, List<Wether> wether) {
             this.context = context;
-            this.wether=wether;
+            this.wether = wether;
         }
 
         @Override
@@ -121,11 +134,11 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
-            LayoutInflater inflater=LayoutInflater.from(context);
+            LayoutInflater inflater = LayoutInflater.from(context);
             if (convertView == null) {
                 convertView = inflater.inflate(R.layout.item_layout, null);
             }
-           TextView city = (TextView) convertView.findViewById(R.id.tv);
+            TextView city = (TextView) convertView.findViewById(R.id.tv);
             // 设置item中indexText的文本
             city.setText(wether.get(position).getCity());
             return convertView;
