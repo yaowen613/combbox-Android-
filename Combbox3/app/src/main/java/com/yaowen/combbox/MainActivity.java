@@ -15,7 +15,7 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
+public class MainActivity extends AppCompatActivity {
     private Combbox combbox;
     private List<String> items;
     private TextView wendu,shidu,fengxiang,zhuangtai;
@@ -38,31 +38,28 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         //combbox.setAdapter(new MyAdapter(this));
         MyAdapter adapter=new MyAdapter(this,wether);
         combbox.setAdapter(adapter);
-        combbox.setOnItemSelectedListener(this);
+        combbox.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                String str = parent.getItemAtPosition(position).toString();
+                Toast.makeText(MainActivity.this, "你选择的是：" + str, Toast.LENGTH_SHORT).show();
+                Log.d("TAG", "你选择的是：" + str);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
     }
 
-    public void getData() {
+    /*public void getData() {
         items = new ArrayList<String>();
         items.add("多云");
         items.add("阳光");
         items.add("小雨");
         items.add("暴雨");
-    }
-
-    @Override
-    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-        String str = parent.getItemAtPosition(position).toString();
-        Toast.makeText(MainActivity.this, "你选择的是：" + str, Toast.LENGTH_SHORT).show();
-        Log.d("TAG", "你选择的是：" + str);
-
-
-    }
-
-    @Override
-    public void onNothingSelected(AdapterView<?> parent) {
-
-    }
-
+    }*/
     class MyAdapter extends BaseAdapter {
         private Context context = null;
         private List<Wether> wether;
