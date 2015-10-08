@@ -10,14 +10,12 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
     private Combbox combbox;
-    private List<String> items;
     private TextView wendu,shidu,fengxiang,zhuangtai;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,15 +31,13 @@ public class MainActivity extends AppCompatActivity {
         wether.add(new Wether("湛江","28°C","95%","东北风","暴雨"));
         wether.add(new Wether("深圳","24°C","85%","偏东风","多云"));
         wether.add(new Wether("北京","23°C","54%","东南风","晴"));
-        // combbox.setAdapter(adapter);
-        //combbox.setAdapter(new MyAdapter(this));
         MyAdapter adapter=new MyAdapter(this,wether);
         combbox.setAdapter(adapter);
         combbox.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 String str = parent.getItemAtPosition(position).toString();
-                Toast.makeText(MainActivity.this, "你选择的是：" + str, Toast.LENGTH_SHORT).show();
+//                Toast.makeText(MainActivity.this, "你选择的是：" + str, Toast.LENGTH_SHORT).show();
                 Log.d("TAG", "你选择的是：" + str);
                 wendu.setText(wether.get(position).getWendu());
                 shidu.setText(wether.get(position).getShidu());
