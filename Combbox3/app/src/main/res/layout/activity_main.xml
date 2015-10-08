@@ -5,23 +5,28 @@
     android:orientation="vertical"
     tools:context=".MainActivity">
 
-    <TextView
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="城市今天的天气如何？"
-        android:textSize="25sp" />
+        android:orientation="horizontal">
 
-    <com.yaowen.combbox.Combbox
-        android:id="@+id/combbox"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"></com.yaowen.combbox.Combbox>
+        <com.yaowen.combbox.Combbox
+            android:id="@+id/combbox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="城市今天的天气如何？"
+            android:textSize="20sp" />
+    </LinearLayout>
 
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:paddingTop="50dp"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:paddingTop="50dp">
 
         <TextView
             android:id="@+id/tv_wendu"
@@ -55,6 +60,7 @@
             android:text="状态"
             android:textSize="20sp" />
     </LinearLayout>
+
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
