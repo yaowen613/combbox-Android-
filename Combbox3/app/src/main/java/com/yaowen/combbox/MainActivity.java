@@ -18,15 +18,26 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
     private Combbox combbox;
     private List<String> items;
-
+    private TextView wendu,shidu,fengxiang,zhuangtai;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         combbox = (Combbox) findViewById(R.id.combbox);
-        getData();
+        wendu= (TextView) findViewById(R.id.tv_wendu1);
+        shidu= (TextView) findViewById(R.id.tv_shidu1);
+        fengxiang= (TextView) findViewById(R.id.tv_fengxiang1);
+        TextView zhuangtai= (TextView) findViewById(R.id.tv_zhuangtai1);
+        //getData();
+        final List<Wether>wether=new ArrayList<Wether>();
+        wether.add(new Wether("广州","26°C","85%","东风","多云"));
+        wether.add(new Wether("湛江","28°C","95%","东北风","暴雨"));
+        wether.add(new Wether("深圳","24°C","85%","偏东风","多云"));
+        wether.add(new Wether("北京","23°C","54%","东南风","晴"));
         // combbox.setAdapter(adapter);
-        combbox.setAdapter(new MyAdapter(this));
+        //combbox.setAdapter(new MyAdapter(this));
+        MyAdapter adapter=new MyAdapter(this,wether);
+        combbox.setAdapter(adapter);
         combbox.setOnItemSelectedListener(this);
     }
 
@@ -43,6 +54,8 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         String str = parent.getItemAtPosition(position).toString();
         Toast.makeText(MainActivity.this, "你选择的是：" + str, Toast.LENGTH_SHORT).show();
         Log.d("TAG", "你选择的是：" + str);
+
+
     }
 
     @Override
@@ -51,22 +64,22 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     }
 
     class MyAdapter extends BaseAdapter {
-        private LayoutInflater mLayoutInflater;
         private Context context = null;
+        private List<Wether> wether;
 
-        public MyAdapter(Context context) {
+        public MyAdapter(Context context,List<Wether> wether) {
             this.context = context;
-            mLayoutInflater = LayoutInflater.from(context);
+            this.wether=wether;
         }
 
         @Override
         public int getCount() {
-            return items.size();
+            return wether.size();
         }
 
         @Override
         public Object getItem(int position) {
-            return items.get(position);
+            return wether.get(position);
         }
 
         @Override
@@ -76,13 +89,13 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
-            final TextView indexText;
+            LayoutInflater inflater=LayoutInflater.from(context);
             if (convertView == null) {
-                convertView = mLayoutInflater.inflate(R.layout.item_layout, null);
+                convertView = inflater.inflate(R.layout.item_layout, null);
             }
-            indexText = (TextView) convertView.findViewById(R.id.tv);
+           TextView city = (TextView) convertView.findViewById(R.id.tv);
             // 设置item中indexText的文本
-            indexText.setText(items.get(position).toString());
+            city.setText(wether.get(position).getCity());
             return convertView;
         }
     }
