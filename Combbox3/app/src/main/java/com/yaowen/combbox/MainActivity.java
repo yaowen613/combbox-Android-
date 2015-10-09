@@ -105,7 +105,8 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
-
+        combobox2.setDisplayField("name");
+        combobox2.setValue("2");
     }
 
     class MyAdapter extends BaseAdapter {

@@ -105,6 +105,7 @@ public class SimpleCombobox extends Spinner implements AdapterView.OnItemSelecte
 
     public void setDisplayField(String displayField) {
         this.displayField = displayField;
+        mStore.setDisplayField(displayField);
     }
 
     public interface OnSelectedListener {
@@ -112,7 +113,8 @@ public class SimpleCombobox extends Spinner implements AdapterView.OnItemSelecte
     }
 
     public void setValue(String value) {
-
+   int pos=mStore.getIndex(value);
+        this.setSelection(pos);
     }
 
     public String getValue() {
@@ -123,12 +125,20 @@ public class SimpleCombobox extends Spinner implements AdapterView.OnItemSelecte
         return new JSONObject();
     }
 
-    ;
 }
 
 class ComboboxStore extends BaseAdapter {
     private Context mContext;
     private ArrayList<JSONObject> mData;
+
+    public String getDisplayField() {
+        return displayField;
+    }
+
+    public void setDisplayField(String displayField) {
+        this.displayField = displayField;
+    }
+
     private String displayField;
 
     public ComboboxStore(SimpleCombobox simpleCombobox, ArrayList<JSONObject> data) {
@@ -140,6 +150,18 @@ class ComboboxStore extends BaseAdapter {
     public ComboboxStore(Context context, ArrayList<JSONObject> data) {
         mContext = context;
         mData = data;
+    }
+
+    public int getIndex(String value) {
+        int index = -1;
+        for (int i = 0; i < mData.size(); i++) {
+            JSONObject item = mData.get(i);
+            if (value.equals(item.optString(displayField, ""))) {
+                index = i;
+                break;
+            }
+        }
+        return index;
     }
 
     @Override

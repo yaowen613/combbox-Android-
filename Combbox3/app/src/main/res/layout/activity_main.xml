@@ -107,5 +107,5 @@
     <com.yaowen.combbox.SimpleCombobox
         android:id="@+id/simpleCombobox"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"></com.yaowen.combbox.SimpleCombobox>
+        android:layout_height="wrap_content" />
 </LinearLayout>
