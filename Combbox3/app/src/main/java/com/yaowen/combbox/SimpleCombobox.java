@@ -113,7 +113,7 @@ public class SimpleCombobox extends Spinner implements AdapterView.OnItemSelecte
     }
 
     public void setValue(String value) {
-   int pos=mStore.getIndex(value);
+        int pos = mStore.getIndex(value);
         this.setSelection(pos);
     }
 
