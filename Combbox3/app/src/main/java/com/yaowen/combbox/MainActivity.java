@@ -52,7 +52,9 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         combobox2.setDisplayField("name");
+//        combobox2.setDisplayField("code");
         combobox2.setValue("2");
+        combobox2.getValue();
     }
 
 }
