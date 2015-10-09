@@ -118,11 +118,12 @@ public class SimpleCombobox extends Spinner implements AdapterView.OnItemSelecte
     }
 
     public String getValue() {
-        return "";
+        return mStore.getDisplayField();
     }
 
     public JSONObject findRecordByValue(String value) {
-        return new JSONObject();
+        JSONObject ob = (JSONObject) mStore.getItem(mStore.getIndex(value));
+        return ob;
     }
 
 }
