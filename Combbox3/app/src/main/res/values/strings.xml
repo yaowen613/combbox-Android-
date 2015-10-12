@@ -3,4 +3,9 @@
 
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
+    <array name="h">
+        <item >vafff2</item>
+        <item >vafff1</item>
+        <item >vafff3</item>
+    </array>
 </resources>

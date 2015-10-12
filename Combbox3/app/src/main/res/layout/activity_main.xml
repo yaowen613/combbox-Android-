@@ -12,6 +12,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:dataMode="string"
-        app:dataStore="@string/hello_world"
+        app:dataStore="@array/h"
         app:displayField="name" />
 </LinearLayout>

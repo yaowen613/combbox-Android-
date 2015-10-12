@@ -48,9 +48,9 @@ public class SimpleCombobox extends Spinner implements AdapterView.OnItemSelecte
         testText=typedArray.getString(R.styleable.Combobox_displayField);
         dataMode=typedArray.getInteger(R.styleable.Combobox_dataMode, -1);
         int i=typedArray.getResourceId(R.styleable.Combobox_dataStore,-1);
-//        typedArray.getResources().getTextArray(i);
+        CharSequence[] strings=getResources().getTextArray(i);
         Log.d("SimpleCombobox", "testText:" + testText + ",dataMode:"
-                + dataMode+",i:"+i+",strings");
+                + dataMode+",i:"+i+",strings"+ strings);
         typedArray.recycle();
     }
 
