@@ -12,6 +12,7 @@ import android.widget.BaseAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -27,7 +28,9 @@ public class SimpleCombobox extends Spinner implements AdapterView.OnItemSelecte
     private OnSelectedListener mSelectedListener;
     private String testText;
     private int dataMode;
-    private ArrayList<JSONObject> baseData;
+    private int dataStore;
+    private CharSequence[]strings;
+    private ArrayList<JSONObject> baseData=new ArrayList<JSONObject>();
 
     public SimpleCombobox(Context context) {
         super(context);
@@ -47,10 +50,40 @@ public class SimpleCombobox extends Spinner implements AdapterView.OnItemSelecte
         TypedArray typedArray=context.obtainStyledAttributes(attrs, R.styleable.Combobox);
         testText=typedArray.getString(R.styleable.Combobox_displayField);
         dataMode=typedArray.getInteger(R.styleable.Combobox_dataMode, -1);
-        int i=typedArray.getResourceId(R.styleable.Combobox_dataStore,-1);
-        CharSequence[] strings=getResources().getTextArray(i);
+        dataStore=typedArray.getResourceId(R.styleable.Combobox_dataStore, -1);
+        //CharSequence[] strings=getResources().getTextArray(i);
+        strings= typedArray.getResources().getTextArray(dataStore);
+        //String s=strings.toString();
+        if(dataMode==0){//0代表dataMode是json数据
+            for (int a=0;a<strings.length;a++){
+                try {
+                    JSONObject ob=new JSONObject();
+                    JSONArray array=ob.getJSONArray(String.valueOf((strings)));
+                    //System.out.println(array);
+                    Log.d("SimpleCombobox","array:"+array);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }else if (dataMode==1){//1代表dataMode是string类型数组
+            displayField="name";
+            for (int a=0;a<strings.length;a++) {
+//                System.out.println(strings[a]);
+                JSONObject ob2=new JSONObject();
+                try {
+                    ob2.put(displayField,strings[a]);
+                    baseData.add(ob2);
+                    Log.d("TAG", "ob2;" + ob2.toString());
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        }
+loadData(baseData);
         Log.d("SimpleCombobox", "testText:" + testText + ",dataMode:"
-                + dataMode+",i:"+i+",strings"+ strings);
+                + dataMode+",dataStore:"+dataStore+",strings:"+ strings);
+        //切记要recycle（）
         typedArray.recycle();
     }
 

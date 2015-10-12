@@ -9,7 +9,7 @@
         <attr name="displayField" format="string" />
         <attr name="dataMode" format="integer">
             <enum name="json" value="0" />
-            <enum name="string" value="2" />
+            <enum name="string" value="1" />
         </attr>
         <attr name="dataStore" format="reference" />
     </declare-styleable>
