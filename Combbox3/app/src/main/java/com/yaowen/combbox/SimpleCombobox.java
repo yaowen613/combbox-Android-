@@ -29,8 +29,8 @@ public class SimpleCombobox extends Spinner implements AdapterView.OnItemSelecte
     private String testText;
     private int dataMode;
     private int dataStore;
-    private CharSequence[]strings;
-    private ArrayList<JSONObject> baseData=new ArrayList<JSONObject>();
+    private CharSequence[] strings;
+    private ArrayList<JSONObject> baseData = new ArrayList<JSONObject>();
 
     public SimpleCombobox(Context context) {
         super(context);
@@ -47,42 +47,42 @@ public class SimpleCombobox extends Spinner implements AdapterView.OnItemSelecte
          * TODO: 2015/10/12
          * Update by HelloWorld
          */
-        TypedArray typedArray=context.obtainStyledAttributes(attrs, R.styleable.Combobox);
-        testText=typedArray.getString(R.styleable.Combobox_displayField);
-        dataMode=typedArray.getInteger(R.styleable.Combobox_dataMode, -1);
-        dataStore=typedArray.getResourceId(R.styleable.Combobox_dataStore, -1);
+        TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.Combobox);
+        testText = typedArray.getString(R.styleable.Combobox_displayField);
+        dataMode = typedArray.getInteger(R.styleable.Combobox_dataMode, -1);
+        dataStore = typedArray.getResourceId(R.styleable.Combobox_dataStore, -1);
         //CharSequence[] strings=getResources().getTextArray(i);
-        strings= typedArray.getResources().getTextArray(dataStore);
+        strings = typedArray.getResources().getTextArray(dataStore);
         //String s=strings.toString();
-        if(dataMode==0){//0代表dataMode是json数据
-            for (int a=0;a<strings.length;a++){
-                try {
-                    JSONObject ob=new JSONObject();
-                    JSONArray array=ob.getJSONArray(String.valueOf((strings)));
-                    //System.out.println(array);
-                    Log.d("SimpleCombobox","array:"+array);
-                } catch (JSONException e) {
-                    e.printStackTrace();
+        if (dataMode == 0) {//0代表dataMode是json数据
+            try {
+                JSONObject ob = new JSONObject(String.valueOf(strings));
+                JSONArray array = ob.getJSONArray("name");
+                Log.d("TAG", "array:" + array);
+                for (int i = 0; i < strings.length; i++) {
+                    JSONObject object = (JSONObject) array.get(i);
+                    baseData.add(object);
                 }
+            } catch (JSONException e) {
+                e.printStackTrace();
             }
-        }else if (dataMode==1){//1代表dataMode是string类型数组
-            displayField="name";
-            for (int a=0;a<strings.length;a++) {
+        } else if (dataMode == 1) {//1代表dataMode是string类型数组
+            displayField = "name";
+            for (int a = 0; a < strings.length; a++) {
 //                System.out.println(strings[a]);
-                JSONObject ob2=new JSONObject();
+                JSONObject ob2 = new JSONObject();
                 try {
-                    ob2.put(displayField,strings[a]);
+                    ob2.put(displayField, strings[a]);
                     baseData.add(ob2);
                     Log.d("TAG", "ob2;" + ob2.toString());
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-
             }
         }
-loadData(baseData);
+        loadData(baseData);
         Log.d("SimpleCombobox", "testText:" + testText + ",dataMode:"
-                + dataMode+",dataStore:"+dataStore+",strings:"+ strings);
+                + dataMode + ",dataStore:" + dataStore + ",strings:" + strings);
         //切记要recycle（）
         typedArray.recycle();
     }
@@ -136,6 +136,7 @@ loadData(baseData);
         return mStore;
     }
 
+    //事件监听响应方法函数；139行-151行
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         JSONObject jsonObject = (JSONObject) getStore().getItem(position);
@@ -149,11 +150,12 @@ loadData(baseData);
 
     }
 
+    //ItemClickListeners响应方法；
     public void setItemClickListeners(OnSelectedListener listeners) {
         mSelectedListener = listeners;
     }
 
-    public void setDisplayField(String displayField) {
+    public void setDisplayField(String displayField) {//自定义函数setDisplayField
         this.displayField = displayField;
         mStore.setDisplayField(displayField);
     }
@@ -162,17 +164,17 @@ loadData(baseData);
         public void onCombboxItemSelected(JSONObject data);
     }
 
-    public void setValue(String value) {
+    public void setValue(String value) {//自定义函数
         int pos = mStore.getIndex(value);
         this.setSelection(pos);
     }
 
-    public String getValue() {
+    public String getValue() {//自定义函数
         //return mStore.getDisplayField();
         return mStore.toString();
     }
 
-    public JSONObject findRecordByValue(String value) {
+    public JSONObject findRecordByValue(String value) {//自定义函数
 
         JSONObject ob = (JSONObject) mStore.getItem(mStore.getIndex(value));
         return ob;
@@ -180,6 +182,7 @@ loadData(baseData);
 
 }
 
+//内部类ComboboxStore继承于BaseAdapter
 class ComboboxStore extends BaseAdapter {
     private Context mContext;
     private ArrayList<JSONObject> mData;
