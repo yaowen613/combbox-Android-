@@ -1,7 +1,9 @@
 package com.yaowen.combbox;
 
 import android.content.Context;
+import android.content.res.TypedArray;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,6 +25,9 @@ public class SimpleCombobox extends Spinner implements AdapterView.OnItemSelecte
     private String[] otherValueFields;
     private ComboboxStore mStore;
     private OnSelectedListener mSelectedListener;
+    private String testText;
+    private int dataMode;
+    private ArrayList<JSONObject> baseData;
 
     public SimpleCombobox(Context context) {
         super(context);
@@ -35,6 +40,18 @@ public class SimpleCombobox extends Spinner implements AdapterView.OnItemSelecte
 
     public SimpleCombobox(Context context, AttributeSet attrs) {
         super(context, attrs);
+        /**
+         * TODO: 2015/10/12
+         * Update by HelloWorld
+         */
+        TypedArray typedArray=context.obtainStyledAttributes(attrs, R.styleable.Combobox);
+        testText=typedArray.getString(R.styleable.Combobox_displayField);
+        dataMode=typedArray.getInteger(R.styleable.Combobox_dataMode, -1);
+        int i=typedArray.getResourceId(R.styleable.Combobox_dataStore,-1);
+//        typedArray.getResources().getTextArray(i);
+        Log.d("SimpleCombobox", "testText:" + testText + ",dataMode:"
+                + dataMode+",i:"+i+",strings");
+        typedArray.recycle();
     }
 
     public SimpleCombobox(Context context, AttributeSet attrs, int defStyleAttr) {
@@ -118,10 +135,12 @@ public class SimpleCombobox extends Spinner implements AdapterView.OnItemSelecte
     }
 
     public String getValue() {
-        return mStore.getDisplayField();
+        //return mStore.getDisplayField();
+        return mStore.toString();
     }
 
     public JSONObject findRecordByValue(String value) {
+
         JSONObject ob = (JSONObject) mStore.getItem(mStore.getIndex(value));
         return ob;
     }

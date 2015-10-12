@@ -24,12 +24,12 @@ public class MainActivity extends AppCompatActivity {
         JSONObject jsonObject2 = new JSONObject();
         JSONObject jsonObject3 = new JSONObject();
         try {
-            jsonObject1.putOpt("name", "1");
-            jsonObject1.putOpt("code", "a");
-            jsonObject2.putOpt("name", "2");
-            jsonObject2.putOpt("code", "b");
-            jsonObject3.putOpt("name", "3");
-            jsonObject3.putOpt("code", "c");
+            jsonObject1.putOpt("name", "莉莉");
+            jsonObject1.putOpt("code", "001");
+            jsonObject2.putOpt("name", "李丽");
+            jsonObject2.putOpt("code", "002");
+            jsonObject3.putOpt("name", "萌萌");
+            jsonObject3.putOpt("code", "003");
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -53,8 +53,16 @@ public class MainActivity extends AppCompatActivity {
         });
         combobox2.setDisplayField("name");
 //        combobox2.setDisplayField("code");
-        combobox2.setValue("2");
-        combobox2.getValue();
+        combobox2.setValue("萌萌");
+        String str=combobox2.getValue();
+        JSONObject object3=combobox2.findRecordByValue("莉莉");
+        //JSONObject object=combobox2.findRecordByValue("meng");
+        //JSONObject object2=combobox2.findRecordByValue("李丽");
+//        Log.d("TAG","object:"+object);
+//        Log.d("TAG","object2:"+object2);
+        Log.d("TAG","object3:"+object3);
+        Log.d("TAG","getValue:"+str);
+
     }
 
 }
