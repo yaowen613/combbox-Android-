@@ -25,7 +25,7 @@ public class SimpleCombobox extends Spinner implements AdapterView.OnItemSelecte
     private String[] otherValueFields;
     private ComboboxStore mStore;
     private OnSelectedListener mSelectedListener;
-       private int dataMode;
+    private int dataMode;
     private int dataStore;
     private CharSequence[] strings;
     private ArrayList<JSONObject> baseData = new ArrayList<JSONObject>();
@@ -53,8 +53,8 @@ public class SimpleCombobox extends Spinner implements AdapterView.OnItemSelecte
         if (dataMode == 0) {//0代表dataMode是json数据
             try {
                 for (int i = 0; i < strings.length; i++) {
-                       String json= (String) strings[i];
-                    JSONObject object=new JSONObject(json);
+                    String json = (String) strings[i];
+                    JSONObject object = new JSONObject(json);
                     baseData.add(object);
                 }
             } catch (JSONException e) {
@@ -103,7 +103,7 @@ public class SimpleCombobox extends Spinner implements AdapterView.OnItemSelecte
 
     public void loadData(ArrayList<JSONObject> jsonObjects) {
         ComboboxStore store = new ComboboxStore(this, jsonObjects);
-     store.setDisplayField(displayField);
+        store.setDisplayField(displayField);
         setStore(store);
 
     }
@@ -167,16 +167,17 @@ public class SimpleCombobox extends Spinner implements AdapterView.OnItemSelecte
 
     public String getValue() {//自定义函数
         //return mStore.getDisplayField();
-        JSONObject value= (JSONObject) this.getSelectedItem();
+        JSONObject value = (JSONObject) this.getSelectedItem();
+        if (value == null) {
+            return null;
+        }
         return value.optString(displayField);
     }
 
     public JSONObject findRecordByValue(String value) {//自定义函数
-
         JSONObject ob = (JSONObject) mStore.getItem(mStore.getIndex(value));
         return ob;
     }
-
 }
 
 //内部类ComboboxStore继承于BaseAdapter
