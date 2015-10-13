@@ -2,6 +2,7 @@ package com.yaowen.combbox;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 
 public class MainActivity extends AppCompatActivity {
     private SimpleCombobox combobox2;
@@ -10,7 +11,10 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-//        combobox2 = (SimpleCombobox) findViewById(R.id.simpleCombobox);
+        combobox2 = (SimpleCombobox) findViewById(R.id.simpleCombobox);
+        combobox2.setValue("北京");
+        String s=combobox2.getValue();
+        Log.d("TAG","getValue:"+s);
 //        ArrayList<JSONObject> store = new ArrayList<JSONObject>(3);
 //        JSONObject jsonObject1 = new JSONObject();
 //        JSONObject jsonObject2 = new JSONObject();

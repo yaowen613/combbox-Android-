@@ -12,7 +12,6 @@ import android.widget.BaseAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -26,8 +25,7 @@ public class SimpleCombobox extends Spinner implements AdapterView.OnItemSelecte
     private String[] otherValueFields;
     private ComboboxStore mStore;
     private OnSelectedListener mSelectedListener;
-    private String testText;
-    private int dataMode;
+       private int dataMode;
     private int dataStore;
     private CharSequence[] strings;
     private ArrayList<JSONObject> baseData = new ArrayList<JSONObject>();
@@ -48,19 +46,15 @@ public class SimpleCombobox extends Spinner implements AdapterView.OnItemSelecte
          * Update by HelloWorld
          */
         TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.Combobox);
-        testText = typedArray.getString(R.styleable.Combobox_displayField);
+        displayField = typedArray.getString(R.styleable.Combobox_displayField);
         dataMode = typedArray.getInteger(R.styleable.Combobox_dataMode, -1);
         dataStore = typedArray.getResourceId(R.styleable.Combobox_dataStore, -1);
-        //CharSequence[] strings=getResources().getTextArray(i);
         strings = typedArray.getResources().getTextArray(dataStore);
-        //String s=strings.toString();
         if (dataMode == 0) {//0代表dataMode是json数据
             try {
-                JSONObject ob = new JSONObject(String.valueOf(strings));
-                JSONArray array = ob.getJSONArray("name");
-                Log.d("TAG", "array:" + array);
                 for (int i = 0; i < strings.length; i++) {
-                    JSONObject object = (JSONObject) array.get(i);
+                       String json= (String) strings[i];
+                    JSONObject object=new JSONObject(json);
                     baseData.add(object);
                 }
             } catch (JSONException e) {
@@ -81,7 +75,7 @@ public class SimpleCombobox extends Spinner implements AdapterView.OnItemSelecte
             }
         }
         loadData(baseData);
-        Log.d("SimpleCombobox", "testText:" + testText + ",dataMode:"
+        Log.d("SimpleCombobox", "testText:" + displayField + ",dataMode:"
                 + dataMode + ",dataStore:" + dataStore + ",strings:" + strings);
         //切记要recycle（）
         typedArray.recycle();
@@ -109,7 +103,9 @@ public class SimpleCombobox extends Spinner implements AdapterView.OnItemSelecte
 
     public void loadData(ArrayList<JSONObject> jsonObjects) {
         ComboboxStore store = new ComboboxStore(this, jsonObjects);
+     store.setDisplayField(displayField);
         setStore(store);
+
     }
 
     public void loadData(String[] strings) {
@@ -171,7 +167,8 @@ public class SimpleCombobox extends Spinner implements AdapterView.OnItemSelecte
 
     public String getValue() {//自定义函数
         //return mStore.getDisplayField();
-        return mStore.toString();
+        JSONObject value= (JSONObject) this.getSelectedItem();
+        return value.optString(displayField);
     }
 
     public JSONObject findRecordByValue(String value) {//自定义函数
