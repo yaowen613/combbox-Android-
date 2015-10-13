@@ -19,27 +19,27 @@ public class MainActivity extends AppCompatActivity {
         combobox2 = (SimpleCombobox) findViewById(R.id.simpleCombobox);
         //combobox2.setValue("ASS");
         combobox2.setValue("北京");
-        String s=combobox2.getValue();
+        String s = combobox2.getValue();
         combobox2.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 String str = parent.getItemAtPosition(position).toString();
                 try {
-                    JSONObject object=new JSONObject(str);
-                    String name=object.getString("name");
+                    JSONObject object = new JSONObject(str);
+                    String name = object.getString("name");
                     Toast.makeText(MainActivity.this, "你选择的项目是：" + name, Toast.LENGTH_SHORT).show();
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
-
+                //Toast.makeText(MainActivity.this, "您没有做出不一样的选择，请核对后重试！", Toast.LENGTH_SHORT).show();
+                Toast.makeText(MainActivity.this, "您没有做选择！", Toast.LENGTH_SHORT).show();
+                //Log.d("MainActivity","debug text");
             }
         });
-
 //        Log.d("TAG", "getValue:" + s);
 //        ArrayList<JSONObject> store = new ArrayList<JSONObject>(3);
 //        JSONObject jsonObject1 = new JSONObject();
