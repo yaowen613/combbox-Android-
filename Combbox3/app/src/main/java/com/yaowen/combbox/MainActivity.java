@@ -2,6 +2,12 @@ package com.yaowen.combbox;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.Toast;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 public class MainActivity extends AppCompatActivity {
     private SimpleCombobox combobox2;
@@ -14,6 +20,25 @@ public class MainActivity extends AppCompatActivity {
         //combobox2.setValue("ASS");
         combobox2.setValue("北京");
         String s=combobox2.getValue();
+        combobox2.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                String str = parent.getItemAtPosition(position).toString();
+                try {
+                    JSONObject object=new JSONObject(str);
+                    String name=object.getString("name");
+                    Toast.makeText(MainActivity.this, "你选择的项目是：" + name, Toast.LENGTH_SHORT).show();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
 
 //        Log.d("TAG", "getValue:" + s);
 //        ArrayList<JSONObject> store = new ArrayList<JSONObject>(3);
