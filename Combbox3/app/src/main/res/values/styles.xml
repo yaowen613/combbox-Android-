@@ -6,6 +6,7 @@
     </style>
 
     <declare-styleable name="Combobox">
+        <attr name="value" format="string" />
         <attr name="displayField" format="string" />
         <attr name="dataMode" format="integer">
             <enum name="json" value="0" />
